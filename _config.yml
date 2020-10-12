@@ -5,3 +5,4 @@ title_separator          : "-"
 name                     : &name "Your Name"
 description              : &description "personal description"
 url                      : https://github.com/panda-planner-dev
+repository               : "panda-planner-dev"
