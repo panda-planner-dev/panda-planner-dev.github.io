@@ -14,28 +14,27 @@ PANDA is a framework that combines different techniques related to Hierarchical 
 </p>
 
 <p>
-The PANDA framework has a long development history, and the first systems worth mentioning are <i>PANDA<sub>1</sub></i> (a plan space-based planning system based on POCL planning) developed by <a href="https://www.uni-ulm.de/in/ki/inst/alumni/bernd-schattenberg/">Bernd Schattenberg</a> and colleagues, and a domain editor tool called <i>PANDA Editor</i> that was a graphical editor for the XML-based input language of <i>PANDA<sub>1</sub></i>, based on the Eclipse framework (also developed by <a href="https://www.uni-ulm.de/in/ki/inst/alumni/bernd-schattenberg/">Bernd Schattenberg</a>). The development of both programs has been terminated; the software is not available anymore. Loosely based on some of the ideas implemented in <i>PANDA<sub>1</sub></i>, but with significant differences already at the level of pseudo code, <a href="https://www.uni-ulm.de/in/ki/inst/alumni/bastian-seegebarth/">Bastian Seegebarth</a> and <a href="https://www.uni-ulm.de/in/ki/inst/alumni/pascal-bercher/">Pascal Bercher</a> developed <i>PANDA<sub>2</sub></i>. Finally, <i>PANDA<sub>3</sub></i> is an exact re-implementation of <i>PANDA<sub>2</sub></i>, which differs mainly in the programming paradigm and design choices, but not on the level of pseudo code. <i>PANDA<sub>3</sub></i> was implemented by <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">Gregor Behnke</a>, with design choices discussed and agreed upon with <a href="https://www.uni-ulm.de/in/ki/inst/alumni/pascal-bercher/">Pascal Bercher</a> and <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">Daniel H&ouml;ller</a>.
+We are currently in the process of making the components of PANDA available <a href="https://github.com/panda-planner-dev">here on GitHub</a> under an open source license. Until then, please contact the respective authors for an executable or the code, if required.
+</p>
+<!--
+<ul>
+<li><a href="https://github.com/panda-planner-dev">GitHub repository</a>
+<li><a href="https://www.uni-ulm.de/in/ki/panda">PANDA Website of Ulm University's AI Institute</a>
+</ul>-->
+
+<h2>A (Short) History</h2>
+<p>
+The PANDA framework has a long development history, and the first systems worth mentioning are <i>PANDA<sub>1</sub></i> (a plan space-based planning system based on POCL planning) developed by <a href="https://www.uni-ulm.de/in/ki/inst/alumni/bernd-schattenberg/">Bernd Schattenberg</a> and colleagues, and a domain editor tool called <i>PANDA Editor</i> that was a graphical editor for the XML-based input language of <i>PANDA<sub>1</sub></i>, based on the Eclipse framework (also developed by <a href="https://www.uni-ulm.de/in/ki/inst/alumni/bernd-schattenberg/">Bernd Schattenberg</a>). The development of both programs has been terminated; the software is not available anymore. Loosely based on some of the ideas implemented in <i>PANDA<sub>1</sub></i>, but with significant differences already at the level of pseudo code, <a href="https://www.uni-ulm.de/in/ki/inst/alumni/bastian-seegebarth/">Bastian Seegebarth</a> and <a href="https://www.uni-ulm.de/in/ki/inst/alumni/pascal-bercher/">Pascal Bercher</a> developed <i>PANDA<sub>2</sub></i>. Finally, <i>PANDA<sub>3</sub></i> is an exact re-implementation of <i>PANDA<sub>2</sub></i>, which differs mainly in the programming paradigm and design choices, but not on the level of pseudo code. <i>PANDA<sub>3</sub></i> was mainly implemented by <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">Gregor Behnke</a>, with some help of <a href="https://www.uni-ulm.de/in/ki/inst/alumni/pascal-bercher/">Pascal Bercher</a> and <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">Daniel H&ouml;ller</a>.
 </p>
 
 <p>
-On top of this "traditional" <i>PANDA<sub>3</sub></i> planner, the current PANDA family also includes two new HTN planning systems, which work completely differently. <i>PANDA<sub>pro</sub></i>, developed by <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">Daniel H&ouml;ller</a>, performs progression search in the space of states (plus partial plans) similar to the SHOP family. <i>PANDA<sub>SAT</sub></i>, developed by <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">Gregor Behnke</a>, solves HTN problems by compiling them in a sequence of SAT problems.
+On top of this "traditional" <i>PANDA<sub>3</sub></i> planner, the current PANDA family also includes two new HTN planning systems, which work completely differently. <i>PANDA<sub>pro</sub></i>, mainly developed by <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">Daniel H&ouml;ller</a>, performs progression search in the space of states (plus partial plans) similar to the SHOP family. <i>PANDA<sub>SAT</sub></i>, mainly developed by <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">Gregor Behnke</a>, solves HTN problems by compiling them into propositional logic.
 </p>
 
+<h2>Overview</h2>
 <p>
 The purpose of this page is to give an overview of the <i>current</i> PANDA framework, i.e., these three planners plus additional systems for plan repair, plan recognition, plan verification, and other related planning tasks -- which are all based somehow on one or several of these systems.
 </p>
-
-<h2>Software Components</h2>
-<p>Here we summarize the <i>current</i> and ongoing work done within the current PANDA framework.</p>
-
-<p>
-We are currently in the process of making the components that base upon <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i> available on github under an open source license. Until then, please contact the respective authors for an executable or the code, if required. The source code and executable of <i>PANDA<sub>3</sub></i>, published under the GPLv3 license, is already available on the the website of <a href="https://www.uni-ulm.de/en/in/ki/research/software/panda/">Ulm University's AI Institute.</a>
-</p>
-
-<ul>
-<li><a href="https://github.com/panda-planner-dev">GitHub repository</a>  for the parser and grounder used for <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i>
-<li><a href="https://www.uni-ulm.de/in/ki/panda">PANDA Website of Ulm University's AI Institute</a>
-</ul>
 
 <p>We now describe the following components:
 <ul>
@@ -62,7 +61,7 @@ We are currently in the process of making the components that base upon <i>PANDA
 
 <p>Like other input languages for planning problems (e.g., like PDDL for classical planning), HDDL is based on a first order input language allowing for variables in the model to enable a(n exponentially more) compact model definition.</p>
 
-<p>Though <i>PANDA<sub>1</sub></i> to <i>PANDA<sub>3</sub></i> support solving HTN planning problems in a lifted manner, the most recent developments, <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i> rely on a fully grounded (i.e. propositional) input model. To make the grounded model as small as possible, these systems come with a hierarchical and a state-based reachability analysis to prune parts of the model that cannot be part of any solution. However, creating the whole model and pruning it afterwards is not feasible. Instead, it is created in a way that avoids the creation of unreachable parts in the first place. The first version of this grounder was developed for and implemented in <i>PANDA<sub>2</sub></i>, reimplemented for <i>PANDA<sub>3</sub></i>, and yet another time (with an even tighter grounding) for <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i> (both planners use the same grounder).  The most recent version is described in the following paper.</p>
+<p>Though the plan space search of the current system comes with some support for solving HTN planning problems in a lifted manner, the most recent developments, (especially <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i>) rely on a fully grounded (i.e. propositional) input model. To make the grounded model as small as possible, these systems come with a hierarchical and a state-based reachability analysis to prune parts of the model that cannot be part of any solution. However, creating the whole model and pruning it afterwards is not feasible. Instead, it is created in a way that avoids the creation of unreachable parts in the first place. The process is described in the following paper.</p>
 
 <ul>
 <li><a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, A. Schmid, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>On Succinct Groundings of HTN Planning Problems</strong>. In: Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI). AAAI Press, 2020, pp. 9775&ndash;9784. (<a href="https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2020/AAAI-BehnkeG.1770.pdf">PDF</a>)</li>
@@ -72,11 +71,11 @@ We are currently in the process of making the components that base upon <i>PANDA
 <h3 id="sec_solvers">Solvers</h3>
 
 <p>
-PANDA comes with three distinct approaches to solve HTN planning problems. Two are based on search, the third one on a translation to propositional logic. The most recent heuristics are only implemented in <i>PANDA<sub>pro</sub></i>, but not available for <i>PANDA<sub>3</sub></i>. We thus recommend using either <i>PANDA<sub>pro</sub></i> or <i>PANDA<sub>SAT</sub></i> when conducting experiments
+PANDA comes with three distinct approaches to solve HTN planning problems. Two are based on search, the third one on a translation to propositional logic. The most recent heuristics are only implemented for progression search. We thus recommend using either <i>PANDA<sub>pro</sub></i> or <i>PANDA<sub>SAT</sub></i> when conducting experiments
 </p>
 
 <h4>Plan Space Search</h4>
-<p>The (historically) first PANDA solvers (i.e., <i>PANDA<sub>1</sub></i> to <i>PANDA<sub>3</sub></i>) are based on search in plan space (using Partial Order Causal Link (POCL) techniques), i.e., search nodes are partial plans that are refined until a solution to the planning problem is found. The pseudo code of <i>PANDA<sub>3</sub></i> is described in the SoCS-14 paper. This search can be guided by heuristics. The most recent heuristics available in the current system are admissible estimates of the number of missing actions or modifications, based on a data structure called Task Decomposition Graph (TDG), all described in the IJCAI-17 paper.</p>
+<p>The (historically) first PANDA solvers are based on search in plan space (using Partial Order Causal Link (POCL) techniques), i.e., search nodes are partial plans that are refined until a solution to the planning problem is found. In the following, we will call it <i>PANDA<sub>pocl</sub></i>. Its pseudo code is described in the SoCS-14 paper. This search can be guided by heuristics. The most recent heuristics available in the current system are admissible estimates of the number of missing actions or modifications, based on a data structure called Task Decomposition Graph (TDG), all described in the IJCAI-17 paper.</p>
 
 <ul>
 <li><a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>An Admissible HTN Planning Heuristic</strong>. In: Proceedings of the 27th International Joint Conference on Artificial Intelligence (IJCAI). IJCAI organization, 2017, pp. 480&ndash;488. (<a href="http://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2017/Bercher17AdmissibleHTNHeuristic.pdf">PDF</a>)</li>
@@ -88,7 +87,7 @@ In: Proceedings of the Seventh Annual Symposium on Combinatorial Search (SoCS). 
 </ul>
 
 <h4>State Space Search</h4>
-<p>The second search-based solver uses Progression Search (see JAIR-20 or ICAPS-18 for the Algorithm). This search builds solutions in a forward manner, which enables a used heuristic to base its calculation on a fully specified and continuously updated state. We have integrated three main lines of progression heuristics. The Relaxed Composition (RC) heuristics relax the HTN model to a classical planning model and uses classical heuristics calculated on this translation to guide the HTN search (see JAIR-20, IJCAI-19, and ICAPS-18). Recently, we integrated a heuristic based on a relaxed problem class called Delete- and Ordering-free HTN planning (see IJCAI-20) computed via (I)LPs; and a heuristic based on a novel landmark generation method (see HPlan-20). When applying the system, the RC heuristics might be a good choice.</p>
+<p>The second search-based solver uses Progression Search (see JAIR-20 for the algorithm). This search builds solutions in a forward manner, which enables a used heuristic to base its calculation on a fully specified and continuously updated state. We have integrated three main lines of progression heuristics. The Relaxed Composition (RC) heuristics relax the HTN model to a classical planning model and uses classical heuristics calculated on this translation to guide the HTN search (see JAIR-20, IJCAI-19, and ICAPS-18). Recently, we integrated a heuristic based on a relaxed problem class called Delete- and Ordering-free HTN planning (see IJCAI-20) computed via (I)LPs; and a heuristic based on a novel landmark generation method (see HPlan-20). When applying the system, the RC heuristics might be a good choice.</p>
 
 <ul>
 
@@ -145,7 +144,7 @@ In: Proceedings of the Seventh Annual Symposium on Combinatorial Search (SoCS). 
 <p>A translation similar to the one used for PGR can also be used to repair plans when  the execution of a plan fails. It is described in KI-20.</p>
 
 <ul>
-<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>HTN Plan Repair via Model Transformation</strong>. In: Proceedings of the 43rd German Conference on Artificial Intelligence (KI). Springer, 2020, pp. 88&ndash;101. (<a href="papers/2020-Hoeller-KI.pdf">PDF</a>, <a href="papers/2020-Hoeller-KI.bib">BibTeX</a>)</li>
+<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>HTN Plan Repair via Model Transformation</strong>. In: Proceedings of the 43rd German Conference on Artificial Intelligence (KI), <span style="color: #ff0000;"><strong>Shortlisted for Best Paper Award (3rd place)</strong></span>. Springer, 2020, pp. 88&ndash;101. (<a href="papers/2020-Hoeller-KI.pdf">PDF</a>, <a href="papers/2020-Hoeller-KI.bib">BibTeX</a>)</li>
 </ul>
 
 </body>
