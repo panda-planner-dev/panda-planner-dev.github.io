@@ -1,6 +1,7 @@
 ---
-layout: jekyll-theme-slate
+layout: default
 ---
+
 <body>
 <h1>The PANDA Planning Framework</h1>
 
@@ -116,12 +117,12 @@ In: Proceedings of the Seventh Annual Symposium on Combinatorial Search (SoCS). 
 <h3 id="sec_verify">Plan Verification</h3>
 <p>There has been some recent work on deciding whether a given sequence of actions is a solution for an HTN planning problem. This problem becomes a computationally hard problem when the decomposition leading from the initial tasks given in the problem to the potential plan is not given.</p> 
 
-<p>We have two distinct components in PANDA:
+<p>We have two distinct components in PANDA:</p>
 <ul>
 <li> For the <a href="ipc2020.hierarchical-task.net">IPC 2020</a> we developed a verifier that gets the produced plan and the applied sequence of decomposition methods, represented as a tree (<a href="https://maumagnaguagno.github.io/HTN_Plan_Viewer/">see an example in code and graphically</a>), as input and decides based on it.
 <li> For cases where the decomposition sequence/tree is not available (e.g., when post-processing or guessing solutions) we developed a SAT-based verifier (see ICAPS-17).
 </ul>
-</p>
+
 
 <ul>
 <li><a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>This is a solution! (... but is it though?) &ndash; Verifying solutions of hierarchical planning problems</strong>. In: Proceedings of the 27th International Conference on Automated Planning and Scheduling (ICAPS). 2017, pp. 20&ndash;28. (<a href="http://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2017/Behnke17Verify.pdf">PDF</a>)</li>
