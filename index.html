@@ -1,3 +1,152 @@
-## The PANDA Planning Framework
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="panda-main" content="width=device-width, initial-scale=1.0">
+  <title>The PANDA Planning Framework</title>
+</head>
+<body>
 
-PANDA is a framework that combines different techniques related to Hierarchical Task Network (HTN) planning. 
+<h1>The PANDA Planning Framework</h1>
+
+<p>
+PANDA is a framework that combines different techniques related to Hierarchical Task Network (HTN) planning. PANDA is an acronym for <span style="text-decoration: underline;">P</span>lanning and <span style="text-decoration: underline;">A</span>cting in a <span style="text-decoration: underline;">N</span>etwork <span style="text-decoration: underline;">D</span>ecomposition <span style="text-decoration: underline;">A</span>rchitecture. PANDA has been developed at the <a href="https://www.uni-ulm.de/en/in/ki/">Institute of Artificial Intelligence</a> at Ulm University headed by <a href="https://www.uni-ulm.de/in/ki/biundo">Susanne Biundo</a>.
+</p>
+
+<p>
+The PANDA framework has a long development history, and the first systems worth mentioning are <i>PANDA<sub>1</sub></i> (a plan space-based planning system based on POCL planning) developed by <a href="https://www.uni-ulm.de/in/ki/inst/alumni/bernd-schattenberg/">Bernd Schattenberg</a> and colleagues, and a domain editor tool called <i>PANDA Editor</i> that was a graphical editor for the XML-based input language of <i>PANDA<sub>1</sub></i>, based on the Eclipse framework (also developed by <a href="https://www.uni-ulm.de/in/ki/inst/alumni/bernd-schattenberg/">Bernd Schattenberg</a>). The development of both programs has been terminated; the software is not available anymore. Loosely based on some of the ideas implemented in <i>PANDA<sub>1</sub></i>, but with significant differences already at the level of pseudo code, <a href="https://www.uni-ulm.de/in/ki/inst/alumni/bastian-seegebarth/">Bastian Seegebarth</a> and <a href="https://www.uni-ulm.de/in/ki/inst/alumni/pascal-bercher/">Pascal Bercher</a> developed <i>PANDA<sub>2</sub></i>. Finally, <i>PANDA<sub>3</sub></i> is an exact re-implementation of <i>PANDA<sub>2</sub></i>, which differs mainly in the programming paradigm and design choices, but not on the level of pseudo code. <i>PANDA<sub>3</sub></i> was implemented by <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">Gregor Behnke</a>, with design choices discussed and agreed upon with <a href="https://www.uni-ulm.de/in/ki/inst/alumni/pascal-bercher/">Pascal Bercher</a> and <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">Daniel H&ouml;ller</a>.
+</p>
+
+<p>
+On top of this "traditional" <i>PANDA<sub>3</sub></i> planner, the current PANDA family also includes two new HTN planning systems, which work completely differently. <i>PANDA<sub>pro</sub></i>, developed by <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">Daniel H&ouml;ller</a>, performs progression search in the space of states (plus partial plans) similar to the SHOP family. <i>PANDA<sub>SAT</sub></i>, developed by <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">Gregor Behnke</a>, solves HTN problems by compiling them in a sequence of SAT problems.
+</p>
+
+<p>
+The purpose of this page is to give an overview of the <i>current</i> PANDA framework, i.e., these three planners plus additional systems for plan repair, plan recognition, plan verification, and other related planning tasks -- which are all based somehow on one or several of these systems.
+</p>
+
+<h2>Software Components</h2>
+<p>Here we summarize the <i>current</i> and ongoing work done within the current PANDA framework.</p>
+
+<p>
+We are currently in the process of making the components that base upon <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i> available on github under an open source license. Until then, please contact the respective authors for an executable or the code, if required. The source code and executable of <i>PANDA<sub>3</sub></i>, published under the GPLv3 license, is already available on the the website of <a href="https://www.uni-ulm.de/en/in/ki/research/software/panda/">Ulm University's AI Institute.</a>
+</p>
+
+<ul>
+<li><a href="https://github.com/panda-planner-dev">GitHub repository</a>  for the parser and grounder used for <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i>
+<li><a href="https://www.uni-ulm.de/in/ki/panda">PANDA Website of Ulm University's AI Institute</a>
+</ul>
+
+<p>We now describe the following components:
+<ul>
+<li><a href="#sec_hddl">Problem Definition</a></li>
+<li><a href="#sec_grounding">Preprocessing and Grounding</a></li>
+<li><a href="#sec_solvers">Solvers</a></li>
+<li><a href="#sec_verify">Plan Verification</a></li>
+<li><a href="#sec_pgr">Plan and Goal Recognition</a></li>
+<li><a href="#sec_repair">Plan Repair</a></li>
+</ul>
+
+<h3 id="sec_hddl">Problem Definition</h3>
+<p>For a long time, there was no widely-used input language for hierarchical planning problems. In preparation of the <a href="ipc2020.hierarchical-task.net">International Planning Competition (IPC) 2020</a>, we surveyed the input languages of recent systems and proposed the Hierarchical Domain Definition Language (HDDL) as standard input language for the competition. The following paper gives a discussion of the related languages and a definition of HDDL.</p>
+
+<ul>
+<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>, H. Fiorino, <a href="http://lig-membres.imag.fr/pellier/">D. Pellier</a>, and <a href="http://www.volus.net/">R. Alford</a>. <strong>HDDL: An Extension to PDDL for Expressing Hierarchical Planning Problems</strong>. In: Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI). AAAI Press, 2020, pp. 9883&ndash;9891. (<a href="https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2020/Hoeller2020HDDL.pdf">PDF</a>)</li>
+</ul>
+
+<p>After the results of the IPC have been published the IPC benchmark set (all in HDDL) will be made publicly available.</p>
+
+
+
+<h3 id="sec_grounding">Preprocessing and Grounding</h3>
+
+<p>Like other input languages for planning problems (e.g., like PDDL for classical planning), HDDL is based on a first order input language allowing for variables in the model to enable a(n exponentially more) compact model definition.</p>
+
+<p>Though <i>PANDA<sub>1</sub></i> to <i>PANDA<sub>3</sub></i> support solving HTN planning problems in a lifted manner, the most recent developments, <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i> rely on a fully grounded (i.e. propositional) input model. To make the grounded model as small as possible, these systems come with a hierarchical and a state-based reachability analysis to prune parts of the model that cannot be part of any solution. However, creating the whole model and pruning it afterwards is not feasible. Instead, it is created in a way that avoids the creation of unreachable parts in the first place. The first version of this grounder was developed for and implemented in <i>PANDA<sub>2</sub></i>, reimplemented for <i>PANDA<sub>3</sub></i>, and yet another time (with an even tighter grounding) for <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i> (both planners use the same grounder).  The most recent version is described in the following paper.</p>
+
+<ul>
+<li><a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, A. Schmid, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>On Succinct Groundings of HTN Planning Problems</strong>. In: Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI). AAAI Press, 2020, pp. 9775&ndash;9784. (<a href="https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2020/AAAI-BehnkeG.1770.pdf">PDF</a>)</li>
+</ul>
+
+
+<h3 id="sec_solvers">Solvers</h3>
+
+<p>
+PANDA comes with three distinct approaches to solve HTN planning problems. Two are based on search, the third one on a translation to propositional logic. The most recent heuristics are only implemented in <i>PANDA<sub>pro</sub></i>, but not available for <i>PANDA<sub>3</sub></i>. We thus recommend using either <i>PANDA<sub>pro</sub></i> or <i>PANDA<sub>SAT</sub></i> when conducting experiments
+</p>
+
+<h4>Plan Space Search</h4>
+<p>The (historically) first PANDA solvers (i.e., <i>PANDA<sub>1</sub></i> to <i>PANDA<sub>3</sub></i>) are based on search in plan space (using Partial Order Causal Link (POCL) techniques), i.e., search nodes are partial plans that are refined until a solution to the planning problem is found. The pseudo code of <i>PANDA<sub>3</sub></i> is described in the SoCS-14 paper. This search can be guided by heuristics. The most recent heuristics available in the current system are admissible estimates of the number of missing actions or modifications, based on a data structure called Task Decomposition Graph (TDG), all described in the IJCAI-17 paper.</p>
+
+<ul>
+<li><a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>An Admissible HTN Planning Heuristic</strong>. In: Proceedings of the 27th International Joint Conference on Artificial Intelligence (IJCAI). IJCAI organization, 2017, pp. 480&ndash;488. (<a href="http://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2017/Bercher17AdmissibleHTNHeuristic.pdf">PDF</a>)</li>
+
+<li><a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, S. Keen, 
+and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. 
+<strong>Hybrid Planning Heuristics Based on Task Decomposition Graphs</strong>. 
+In: Proceedings of the Seventh Annual Symposium on Combinatorial Search (SoCS). AAAI Press, 2014.</li>
+</ul>
+
+<h4>State Space Search</h4>
+<p>The second search-based solver uses Progression Search (see JAIR-20 or ICAPS-18 for the Algorithm). This search builds solutions in a forward manner, which enables a used heuristic to base its calculation on a fully specified and continuously updated state. We have integrated three main lines of progression heuristics. The Relaxed Composition (RC) heuristics relax the HTN model to a classical planning model and uses classical heuristics calculated on this translation to guide the HTN search (see JAIR-20, IJCAI-19, and ICAPS-18). Recently, we integrated a heuristic based on a relaxed problem class called Delete- and Ordering-free HTN planning (see IJCAI-20) computed via (I)LPs; and a heuristic based on a novel landmark generation method (see HPlan-20). When applying the system, the RC heuristics might be a good choice.</p>
+
+<ul>
+
+<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a> and <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>. 
+<strong>Landmark Extraction in HTN Planning</strong>. In: Proceedings of the 3rd ICAPS Workshop on Hierarchical Planning (HPlan). 2020.</li>
+
+<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, and <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>. <strong>Delete- and Ordering-Relaxation Heuristics for HTN Planning</strong>. In: Proceedings of the 29th International Joint Conference on Artificial Intelligence (IJCAI). IJCAI organization, 2020, pp. 4076&ndash;4083. (<a href="https://www.ijcai.org/proceedings/2020/0564.pdf">PDF</a>, <a href="papers/2020-Hoeller-IJCAI.bib">BibTeX</a>)</li>
+
+<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>,     <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>,     <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>HTN Planning as Heuristic Progression Search</strong>. Journal of Artificial Intelligence Research 67: pp. 835&ndash;880 (2020). (<a href="https://jair.org/index.php/jair/article/view/11282/26578">PDF</a>)</li>
+
+<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>On Guiding Search in HTN Planning with Classical Planning Heuristics</strong>. In: Proceedings of the 28th International Joint Conference on Artificial Intelligence (IJCAI). IJCAI organization, 2019, pp. 6171&ndash;6175. (<a href="http://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2019/Hoeller2019ProgressionHeuristics.pdf">PDF</a>)</li>
+
+<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>A Generic Method to Guide HTN Progression Search with Classical Heuristics</strong>. In: Proceedings of the 28th International Conference on Automated Planning and Scheduling (ICAPS), <span style="color: #ff0000;"><strong>Best Student Paper Award</strong></span>. AAAI Press, 2018, pp. 114&ndash;122. (<a href="https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2018/Hoeller18Progression.pdf">PDF</a>)</li>
+</ul>
+
+
+<h4>SAT-based Solvers</h4>
+<p>We have developed a translation from HTN planning problems to propositional logic that allows the usage of SAT solvers to find a solution for the planning problem. We thereby first bound the decomposition depth of the problem to enable the translation (of the potentially undecidable HTN problem) to the decidable SAT problem. Then we encode the problem into a propositional formula that has a solution if and only if the (bounded) planning problem has one.</p> 
+
+<p>There have mainly been two distinct encodings, one for totally ordered HTN planning problems (see AAAI-18), and one for partially ordered HTN planning problems (see AAAI-19 and IJCAI-19). This planner might be the currently strongest solver in the PANDA framework.</p>
+
+<ul>
+<li><a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>Bringing Order to Chaos &ndash; A Compact Representation of Partial Order in SAT-based HTN Planning</strong>. In: Proceedings of the 33rd AAAI Conference on Artificial Intelligence (AAAI). AAAI Press, 2019, pp. 7520&ndash;7529. (<a href="https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2019/Behnke2019orderchaos.pdf">PDF</a>)</li>
+
+<li><a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>Finding Optimal Solutions in HTN Planning -- A SAT-based Approach</strong>. Proceedings of the 28th International Joint Conference on Artificial Intelligence (IJCAI). IJCAI organization, 2019, pp. 5500--5508.</li>
+
+<li><a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>totSAT &ndash; Totally-Ordered Hierarchical Planning through SAT</strong>. In: Proceedings of the 32nd AAAI Conference on Artificial Intelligence (AAAI). AAAI Press, 2018, pp. 6110&ndash;6118. (<a href="https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2018/Behnke2018totSAT.pdf">PDF</a>)</li>
+</ul>
+
+
+<h3 id="sec_verify">Plan Verification</h3>
+<p>There has been some recent work on deciding whether a given sequence of actions is a solution for an HTN planning problem. This problem becomes a computationally hard problem when the decomposition leading from the initial tasks given in the problem to the potential plan is not given.</p> 
+
+<p>We have two distinct components in PANDA:
+<ul>
+<li> For the <a href="ipc2020.hierarchical-task.net">IPC 2020</a> we developed a verifier that gets the produced plan and the applied sequence of decomposition methods, represented as a tree (<a href="https://maumagnaguagno.github.io/HTN_Plan_Viewer/">see an example in code and graphically</a>), as input and decides based on it.
+<li> For cases where the decomposition sequence/tree is not available (e.g., when post-processing or guessing solutions) we developed a SAT-based verifier (see ICAPS-17).
+</ul>
+</p>
+
+<ul>
+<li><a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>This is a solution! (... but is it though?) &ndash; Verifying solutions of hierarchical planning problems</strong>. In: Proceedings of the 27th International Conference on Automated Planning and Scheduling (ICAPS). 2017, pp. 20&ndash;28. (<a href="http://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2017/Behnke17Verify.pdf">PDF</a>)</li>
+</ul>
+
+
+<h3 id="sec_pgr">Plan and Goal Recognition</h3>
+<p>In classical planning, there has been some work on using techniques from planning to solve the task of Plan and Goal Recognition (PGR). In that spirit, we developed a translation from PGR to HTN planning problems. The transformation is based on the lifted model and the resulting problem can be solved by any planning system (see ICTAI-18).</p>
+
+<ul>
+<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>Plan and Goal Recognition as HTN Planning</strong>. In: Proceedings of the 30th IEEE International Conference on Tools with Artificial Intelligence (ICTAI), <span style="color: #ff0000;"><strong>Best Paper Award</strong></span>. IEEE Computer Society, 2018, pp. 466&ndash;473. (<a href="https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2018/Hoeller2018PlanRec.pdf">PDF</a>)</li>
+</ul>
+
+<h3 id="sec_repair">Plan Repair</h3>
+<p>A translation similar to the one used for PGR can also be used to repair plans when  the execution of a plan fails. It is described in KI-20.</p>
+
+<ul>
+<li><a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>HTN Plan Repair via Model Transformation</strong>. In: Proceedings of the 43rd German Conference on Artificial Intelligence (KI). Springer, 2020, pp. 88&ndash;101. (<a href="papers/2020-Hoeller-KI.pdf">PDF</a>, <a href="papers/2020-Hoeller-KI.bib">BibTeX</a>)</li>
+</ul>
+
+</body>
+</html>
