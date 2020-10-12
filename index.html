@@ -20,7 +20,7 @@ Finally, <i>PANDA<sub>3</sub></i> includes an exact re-implementation of <i>PAND
 </p>
 
 <p>
-On top of this "traditional" POCL-based search, <i>PANDA<sub>3</sub></i> also includes two new HTN planning systems, which work completely differently. We will denote the POCL-based solver as <i>PANDA<sub>pocl</sub></i>. The two other solvers are the following: <i>PANDA<sub>pro</sub></i>, mainly developed by <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">Daniel H&ouml;ller</a>, performs progression search in the space of states (plus partial plans) similar to the SHOP family. <i>PANDA<sub>SAT</sub></i>, mainly developed by <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">Gregor Behnke</a>, solves HTN problems by compiling them into propositional logic.
+On top of this "traditional" POCL-based search, <i>PANDA<sub>3</sub></i> also includes two new HTN planning systems, which work completely differently. We will denote the POCL-based solver as <i>PANDA<sub>pocl</sub></i>. The two other solvers are the following: <i>PANDA<sub>pro</sub></i>, mainly developed by <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">Daniel H&ouml;ller</a>, performs progression search in the space of states (plus partial plans) similar to the SHOP family. <i>PANDA<sub>sat</sub></i>, mainly developed by <a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">Gregor Behnke</a>, solves HTN problems by compiling them into propositional logic.
 </p>
 
 <h2>Overview</h2>
@@ -53,7 +53,7 @@ The purpose of this page is to give an overview of the <strong>current</strong> 
 
 <p>Like other input languages for planning problems (e.g., like PDDL for classical planning), HDDL is based on a first order input language allowing for variables in the model to enable a(n exponentially more) compact model definition.</p>
 
-<p>Though the plan space search of the current system comes with some support for solving HTN planning problems in a lifted manner, the most recent developments, (especially <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>SAT</sub></i>) rely on a fully grounded (i.e. propositional) input model. To make the grounded model as small as possible, these systems come with a hierarchical and a state-based reachability analysis to prune parts of the model that cannot be part of any solution. However, creating the whole model and pruning it afterwards is not feasible. Instead, it is created in a way that avoids the creation of unreachable parts in the first place. The process is described in the following paper.</p>
+<p>Though the plan space search of the current system comes with some support for solving HTN planning problems in a lifted manner, the most recent developments, (especially <i>PANDA<sub>pro</sub></i> and <i>PANDA<sub>sat</sub></i>) rely on a fully grounded (i.e. propositional) input model. To make the grounded model as small as possible, these systems come with a hierarchical and a state-based reachability analysis to prune parts of the model that cannot be part of any solution. However, creating the whole model and pruning it afterwards is not feasible. Instead, it is created in a way that avoids the creation of unreachable parts in the first place. The process is described in the following paper.</p>
 
 <ul>
 <li><a href="http://www2.informatik.uni-freiburg.de/~behnkeg/index_de.html">G. Behnke</a>, <a href="http://fai.cs.uni-saarland.de/hoeller/index.html">D. H&ouml;ller</a>, A. Schmid, <a href="https://cecs.anu.edu.au/people/pascal-bercher">P. Bercher</a>, and <a href="https://www.uni-ulm.de/in/ki/biundo">S. Biundo</a>. <strong>On Succinct Groundings of HTN Planning Problems</strong>. In: Proceedings of the 34th AAAI Conference on Artificial Intelligence (AAAI). AAAI Press, 2020, pp. 9775&ndash;9784. (<a href="https://www.uni-ulm.de/fileadmin/website_uni_ulm/iui.inst.090/Publikationen/2020/AAAI-BehnkeG.1770.pdf">PDF</a>)</li>
@@ -63,7 +63,7 @@ The purpose of this page is to give an overview of the <strong>current</strong> 
 <h3 id="sec_solvers">Solvers</h3>
 
 <p>
-PANDA comes with three distinct approaches to solve HTN planning problems. Two are based on search, the third one on a translation to propositional logic. The most recent heuristics are only implemented for progression search. We thus recommend using either <i>PANDA<sub>pro</sub></i> or <i>PANDA<sub>SAT</sub></i> when conducting experiments
+PANDA comes with three distinct approaches to solve HTN planning problems. Two are based on search, the third one on a translation to propositional logic. The most recent heuristics are only implemented for progression search. We thus recommend using either <i>PANDA<sub>pro</sub></i> or <i>PANDA<sub>sat</sub></i> when conducting experiments
 </p>
 
 <h4>Plan Space Search</h4>
